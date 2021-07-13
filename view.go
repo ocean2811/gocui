@@ -9,8 +9,8 @@ import (
 	"errors"
 	"io"
 	"strings"
-	"unicode/utf8"
 
+	"github.com/mattn/go-runewidth"
 	"github.com/nsf/termbox-go"
 )
 
@@ -354,8 +354,8 @@ func (v *View) draw() error {
 			if err := v.setRune(x, y, c.chr, fgColor, bgColor); err != nil {
 				return err
 			}
-			
-			l := utf8.RuneLen(c.chr)
+
+			l := runewidth.RuneWidth(c.chr)
 			if l <= 0 {
 				l = 1
 			}
