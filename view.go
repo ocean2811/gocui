@@ -9,6 +9,7 @@ import (
 	"errors"
 	"io"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/nsf/termbox-go"
 )
@@ -353,7 +354,12 @@ func (v *View) draw() error {
 			if err := v.setRune(x, y, c.chr, fgColor, bgColor); err != nil {
 				return err
 			}
-			x+=2
+			
+			l := utf8.RuneLen(c.chr)
+			if l <= 0 {
+				l = 1
+			}
+			x += l
 		}
 		y++
 	}
